@@ -16,9 +16,11 @@ def copyImage(src, dest, dFolder, filename):
         if os.path.exists(dFolder):
             im = Image.open(src)
             imR = im.resize((150,150), Image.ANTIALIAS)
-            imR.save(dest, quality=95)
+            imR.save(dest, quality=100)
             # shutil.copy(src, dest)
             print("saved cropped image!")
+            os.remove(src)
+            print("deleted source image")
             # print("COPIED!")
         else:
             os.makedirs(dFolder)
@@ -27,6 +29,8 @@ def copyImage(src, dest, dFolder, filename):
             imR.save(dest, quality=95)
             # shutil.copy(src, dest)
             print("saved cropped image after creating folder!")
+            os.remove(src)
+            print("removed source file!")
             # print("COPIED!2")
     except:
         print("Error!")
