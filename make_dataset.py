@@ -3,22 +3,30 @@ import csv
 import shutil
 import sys
 import os
+from PIL import Image
 # import glob
 # from pathlib import Path
 
 
 # srcPath = sys.argv[1]
 
-def copyImage(src,dest, dFolder):
+def copyImage(src, dest, dFolder, filename):
     print("COPY FUNC!")
     try:
         if os.path.exists(dFolder):
-            
-            shutil.copy(src, dest)
+            im = Image.open(src)
+            imR = im.resize((150,150), Image.ANTIALIAS)
+            imR.save(dest, quality=95)
+            # shutil.copy(src, dest)
+            print("saved cropped image!")
             # print("COPIED!")
         else:
             os.makedirs(dFolder)
-            shutil.copy(src, dest)
+            im = Image.open(src)
+            imR = im.resize((150,150), Image.ANTIALIAS)
+            imR.save(dest, quality=95)
+            # shutil.copy(src, dest)
+            print("saved cropped image after creating folder!")
             # print("COPIED!2")
     except:
         print("Error!")
@@ -54,7 +62,7 @@ with open('faces.csv', 'r') as facesFile:
         # print(f"toD: {toD}")
         print(f"From: {fromD}")
         print(f"To: {toD}")
-        copyImage(fromD, toD, toDestImageFolder)
+        copyImage(fromD, toD, toDestImageFolder, filename)
         # if os.path.exists(toDestImageFolder):
         #     shutil.copy(fromSrcImageFolder+"/"+filename, toDestImageFolder+"/"+filename)
         # else:
